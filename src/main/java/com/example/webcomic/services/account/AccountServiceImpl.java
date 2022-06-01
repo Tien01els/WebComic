@@ -18,7 +18,7 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public ResponseObject checkLogin(AccountDTO accountDTO) {
-        Account account = accountRepository.findAccountByUsername(accountDTO.getUserName())
+        Account account = accountRepository.findAccountByUsername(accountDTO.getUsername())
                                 .map(accountCheck -> {
                                     return accountCheck;
                                 }).orElseGet(() -> {
@@ -38,7 +38,7 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public ResponseObject createAccount(AccountDTO accountDTO) {
-        Account account = accountRepository.findAccountByUsername(accountDTO.getUserName())
+        Account account = accountRepository.findAccountByUsername(accountDTO.getUsername())
                                 .map(accountCheck -> {
                                     return accountCheck;
                                 }).orElseGet(() -> {
@@ -50,7 +50,7 @@ public class AccountServiceImpl implements AccountService {
         }
 
         UserDTO user = new UserDTO();
-        user.setName(accountDTO.getUserName());
+        user.setName(accountDTO.getUsername());
         accountDTO.setUser(user);
         accountDTO.setIsActive(true);
 
