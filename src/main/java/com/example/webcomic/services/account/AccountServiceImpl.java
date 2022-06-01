@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Component
@@ -93,5 +94,16 @@ public class AccountServiceImpl implements AccountService {
                     return null;
                 });
         return new ResponseObject("Success", "Subcribe successfully", new AccountDTO(account));
+    }
+
+    @Override
+    public ResponseObject getAllAccount() {
+        List<Account> listAccount = accountRepository.findAll();
+        List<AccountDTO> listAccountDTO = new ArrayList<>();
+        listAccount.forEach(account -> {
+            listAccountDTO.add(new AccountDTO(account));
+        });
+
+        return new ResponseObject("Success", "Subcribe successfully", listAccountDTO);
     }
 }

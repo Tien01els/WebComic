@@ -14,6 +14,10 @@ public class AccountController {
     @Autowired
     private AccountService accountService;
 
+    @GetMapping("")
+    public ResponseEntity<ResponseObject> getAllAccount() {
+        return ResponseEntity.ok(accountService.getAllAccount());
+    }
 
     @GetMapping("/login")
     public ResponseEntity<ResponseObject> login(@RequestBody AccountDTO accountDTO) {

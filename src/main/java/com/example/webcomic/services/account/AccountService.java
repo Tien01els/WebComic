@@ -11,4 +11,5 @@ public interface AccountService {
     ResponseObject banAccount(String id);
     ResponseObject editAccount(AccountDTO accountDTO);
     ResponseObject subComic(String id, String idComic);
+    ResponseObject getAllAccount();
 }
