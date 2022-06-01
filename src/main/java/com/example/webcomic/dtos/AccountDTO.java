@@ -13,7 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 public class AccountDTO {
     private String id;
-    private String userName;
+    private String username;
     private String password;
     private Boolean isActive;
     private UserDTO user;
@@ -22,7 +22,7 @@ public class AccountDTO {
 
     public AccountDTO(Account account) {
         this.id = account.getId();
-        this.userName = account.getUsername();
+        this.username = account.getUsername();
         this.password = account.getPassword();
         this.isActive = account.getIsActive();
         this.user = new UserDTO(account.getUser());

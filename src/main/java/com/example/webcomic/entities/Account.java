@@ -27,7 +27,7 @@ public class Account {
 
     public Account(AccountDTO account) {
         this.id = account.getId();
-        this.username = account.getUserName();
+        this.username = account.getUsername();
         this.password = account.getPassword();
         this.isActive = account.getIsActive();
         this.user = new User(account.getUser());
