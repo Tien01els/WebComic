@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(path = "/comic")
+@RequestMapping(path = "/app/1.0/comic")
 public class ComicController {
     @Autowired
     private ComicService comicService;

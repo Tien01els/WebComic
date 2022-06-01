@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(path = "/account")
+@RequestMapping(path = "/app/1.0/account")
 public class AccountController {
 
     @Autowired
