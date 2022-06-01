@@ -44,8 +44,10 @@ public class AccountServiceImpl implements AccountService {
                                 }).orElseGet(() -> {
                                     return null;
                                 });
-
-        if (!Objects.isNull(account)) {
+        if (accountDTO.getUsername().isEmpty()) {
+            return new ResponseObject("Fail", "Username is null", "");
+        }
+        else if (!Objects.isNull(account)) {
             return new ResponseObject("Fail", "Account already exists", "");
         }
 
