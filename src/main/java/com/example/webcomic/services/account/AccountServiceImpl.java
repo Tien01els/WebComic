@@ -5,12 +5,14 @@ import com.example.webcomic.dtos.UserDTO;
 import com.example.webcomic.entities.Account;
 import com.example.webcomic.response.ResponseObject;
 import com.example.webcomic.repositories.AccountRepository;
+import com.example.webcomic.utils.PasswordEncryptionSingleton;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @Component
 public class AccountServiceImpl implements AccountService {
@@ -39,12 +41,7 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public ResponseObject createAccount(AccountDTO accountDTO) {
-        Account account = accountRepository.findAccountByUsername(accountDTO.getUsername())
-                                .map(accountCheck -> {
-                                    return accountCheck;
-                                }).orElseGet(() -> {
-                                    return null;
-                                });
+        Optional<Account> account = accountRepository.findAccountByUsername(accountDTO.getUsername());
         if (accountDTO.getUsername().isEmpty()) {
             return new ResponseObject("Fail", "Username is null", "");
         }
@@ -56,6 +53,7 @@ public class AccountServiceImpl implements AccountService {
         user.setName(accountDTO.getUsername());
         accountDTO.setUser(user);
         accountDTO.setIsActive(true);
+        accountDTO.setPassword(PasswordEncryptionSingleton.getInstance().encrypt(accountDTO.getPassword()));
 
         return new ResponseObject("Success", "Register successfully",
                 new AccountDTO(accountRepository.save(new Account(accountDTO))));

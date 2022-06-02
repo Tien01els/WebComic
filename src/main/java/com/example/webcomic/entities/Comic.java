@@ -24,7 +24,7 @@ public class Comic {
     private String id;
     private String comicName;
     private List<String> author;
-    private List<String> genres;
+    private String genres;
     private String status;
     private Long view;
     private String content;
@@ -41,12 +41,7 @@ public class Comic {
             }
             this.author.add(author);
         });
-        comic.getGenres().forEach(genre -> {
-            if (this.genres == null) {
-                this.genres = new ArrayList<>();
-            }
-            this.genres.add(genre);
-        });
+        this.genres = comic.getGenres();
         this.status = comic.getStatus();
         this.view = comic.getView();
         this.content = comic.getContent();
