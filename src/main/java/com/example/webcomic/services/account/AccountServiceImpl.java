@@ -31,7 +31,7 @@ public class AccountServiceImpl implements AccountService {
             return new ResponseObject("Fail", "Account invalid", "");
         }
 //        else if (!accountDTO.getPassword().equals(account.getPassword()))
-        else if (PasswordEncryptionSingleton.getInstance().compare(accountDTO.getPassword(), account.getPassword()))
+        else if (!PasswordEncryptionSingleton.getInstance().compare(accountDTO.getPassword(), account.getPassword()))
         {
             return new ResponseObject("Fail", "Password invalid", "");
         } else if (!account.getIsActive()) {
