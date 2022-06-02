@@ -30,7 +30,8 @@ public class AccountServiceImpl implements AccountService {
         if (Objects.isNull(account)) {
             return new ResponseObject("Fail", "Account invalid", "");
         }
-        else if (!accountDTO.getPassword().equals(account.getPassword()))
+//        else if (!accountDTO.getPassword().equals(account.getPassword()))
+        else if (PasswordEncryptionSingleton.getInstance().compare(accountDTO.getPassword(), account.getPassword()))
         {
             return new ResponseObject("Fail", "Password invalid", "");
         } else if (!account.getIsActive()) {
@@ -45,7 +46,7 @@ public class AccountServiceImpl implements AccountService {
         if (accountDTO.getUsername().isEmpty()) {
             return new ResponseObject("Fail", "Username is null", "");
         }
-        else if (!Objects.isNull(account)) {
+        else if (Objects.isNull(account)) {
             return new ResponseObject("Fail", "Account already exists", "");
         }
 
