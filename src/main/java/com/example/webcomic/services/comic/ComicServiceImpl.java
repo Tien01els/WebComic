@@ -86,15 +86,12 @@ public class ComicServiceImpl implements ComicService {
 
     }
     @Override
-    public ResponseObject searchComics(String name) {
+    public ResponseObject searchComics(String keyword) {
+        List<Comic> comicList = comicRepository.findByName(keyword);
         List<ComicDTO> comicDTOList = new ArrayList<>();
-        List<Comic> comicList = comicRepository.findByName(name);
         comicList.forEach(comic -> {
             comicDTOList.add(new ComicDTO(comic));
         });
-        return new ResponseObject("Success", "Found comics successfully", comicList);
+        return new ResponseObject("Success", "Found comics successfully", comicDTOList);
     }
-
-
-
 }

@@ -21,23 +21,17 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public ResponseObject checkLogin(AccountDTO accountDTO) {
-        Account account = accountRepository.findAccountByUsername(accountDTO.getUsername())
-                                .map(accountCheck -> {
-                                    return accountCheck;
-                                }).orElseGet(() -> {
-                                    return null;
-                                });
+        Optional<Account> account = accountRepository.findAccountByUsername(accountDTO.getUsername());
         if (Objects.isNull(account)) {
             return new ResponseObject("Fail", "Account invalid", "");
         }
-//        else if (!accountDTO.getPassword().equals(account.getPassword()))
-        else if (!PasswordEncryptionSingleton.getInstance().compare(accountDTO.getPassword(), account.getPassword()))
+        else if (!PasswordEncryptionSingleton.getInstance().compare(accountDTO.getPassword(), account.get().getPassword()))
         {
             return new ResponseObject("Fail", "Password invalid", "");
-        } else if (!account.getIsActive()) {
+        } else if (!account.get().getIsActive()) {
             return new ResponseObject("Fail", "Account is banned", "");
         }
-        return new ResponseObject("Success", "Logged in successfully", new AccountDTO(account));
+        return new ResponseObject("Success", "Logged in successfully", new AccountDTO(account.get()));
     }
 
     @Override
@@ -69,10 +63,6 @@ public class AccountServiceImpl implements AccountService {
                 }).orElseGet(() -> {
                     return null;
                 });
-        if (Objects.isNull(accountBanned))
-        {
-            return new ResponseObject("Fail", "Ban failure", "");
-        }
         return new ResponseObject("Success", "Ban successfully", new AccountDTO(accountBanned));
     }
 
