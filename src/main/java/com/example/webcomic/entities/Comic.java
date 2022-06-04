@@ -1,9 +1,8 @@
 package com.example.webcomic.entities;
 
+import com.example.webcomic.dtos.ComicDTO;
 import com.example.webcomic.entities.embedded.Chapter;
 import com.example.webcomic.enums.Mode;
-import com.example.webcomic.dtos.ComicDTO;
-import com.example.webcomic.entities.embedded.User;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -11,6 +10,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Setter
 @Getter

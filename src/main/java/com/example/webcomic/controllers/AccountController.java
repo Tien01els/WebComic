@@ -19,7 +19,7 @@ public class AccountController {
         return ResponseEntity.ok(accountService.getAllAccount());
     }
 
-    @GetMapping("/login")
+    @PostMapping("/login")
     public ResponseEntity<ResponseObject> login(@RequestBody AccountDTO accountDTO) {
         return ResponseEntity.ok(accountService.checkLogin(accountDTO));
     }

@@ -37,6 +37,6 @@ public class ComicController {
 
     @GetMapping("/getFavComic")
     public ResponseEntity<ResponseObject> getFavComic(@RequestBody List<String> ListIdFavComic) {
-        return ResponseEntity.ok(comicService.getComicInfo(id));
+        return ResponseEntity.ok(comicService.getFavComic(ListIdFavComic));
     }
 }

@@ -1,24 +1,19 @@
 package com.example.webcomic.services.comic;
 
-import com.example.webcomic.dtos.AccountDTO;
 import com.example.webcomic.dtos.ComicDTO;
 import com.example.webcomic.response.ResponseObject;
 import com.example.webcomic.entities.Comic;
 import com.example.webcomic.repositories.ComicRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StreamUtils;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class ComicServiceImpl implements ComicService {
@@ -91,6 +86,16 @@ public class ComicServiceImpl implements ComicService {
         List<ComicDTO> comicDTOList = new ArrayList<>();
         comicList.forEach(comic -> {
             comicDTOList.add(new ComicDTO(comic));
+        });
+        return new ResponseObject("Success", "Found comics successfully", comicDTOList);
+    }
+
+    @Override
+    public ResponseObject getFavComic(List<String> listIdFavComic) {
+        List<ComicDTO> comicDTOList = new ArrayList<>();
+        listIdFavComic.forEach(idComic -> {
+            Optional<Comic> comic = comicRepository.findComicById(idComic);
+            comicDTOList.add(new ComicDTO(comic.get()));
         });
         return new ResponseObject("Success", "Found comics successfully", comicDTOList);
     }
