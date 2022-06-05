@@ -72,7 +72,7 @@ public class AccountServiceImpl implements AccountService {
         Optional<Account> account = accountRepository.findAccountById(id);
         if (account.get().getUser().getFullname() != null) {
             if (account.get().getUser().getFullname().equals(userDTO.getName())) {
-                return new ResponseObject("Fail", "Changed information coincides with previous information", "");
+                return new ResponseObject("Fail", "The new information is the same as previous information", "");
             }
         }
         account.get().setUser(new User(userDTO));
@@ -108,7 +108,7 @@ public class AccountServiceImpl implements AccountService {
     public ResponseObject changePassword(String idUser, String oldPassword, String newPassword) {
         Optional<Account> account = accountRepository.findAccountById(idUser);
         if (PasswordEncryptionSingleton.getInstance().compare(oldPassword, account.get().getPassword())) {
-            return new ResponseObject("Fail", "Wrong password", "");
+            return new ResponseObject("Fail", "The new password is the same as the old password", "");
         }
         account.get().setPassword(PasswordEncryptionSingleton.getInstance().encrypt(newPassword));
         return new ResponseObject("Success", "Change password successfully", new AccountDTO(accountRepository.save(account.get())));
