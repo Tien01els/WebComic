@@ -42,11 +42,13 @@ public class ComicDTO {
         this.content = comic.getContent();
         this.lastUpdate = comic.getLastUpdate();
         this.shareMode = comic.getShareMode();
-        comic.getListChap().forEach(chapter -> {
-            if (this.listChap == null) {
-                this.listChap = new ArrayList<>();
-            }
-            this.listChap.add(new ChapterDTO(chapter));
-        });
+        if (comic.getListChap() != null) {
+            comic.getListChap().forEach(chapter -> {
+                if (this.listChap == null) {
+                    this.listChap = new ArrayList<>();
+                }
+                this.listChap.add(new ChapterDTO(chapter));
+            });
+        }
     }
 }

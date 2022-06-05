@@ -49,11 +49,13 @@ public class Comic {
         this.content = comic.getContent();
         this.lastUpdate = comic.getLastUpdate();
         this.shareMode = comic.getShareMode();
-        comic.getListChap().forEach(chapter -> {
-            if (this.listChap == null) {
-                this.listChap = new ArrayList<>();
-            }
-            this.listChap.add(new Chapter(chapter));
-        });
+        if (comic.getListChap() != null) {
+            comic.getListChap().forEach(chapter -> {
+                if (this.listChap == null) {
+                    this.listChap = new ArrayList<>();
+                }
+                this.listChap.add(new Chapter(chapter));
+            });
+        }
     }
 }
