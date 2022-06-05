@@ -44,6 +44,11 @@ public class AccountController {
         return ResponseEntity.ok(accountService.editAccount(accountDTO));
     }
 
+    @PutMapping("/changePassword/{idUser}")
+    public ResponseEntity<ResponseObject> changePassword(@PathVariable String idUser, @RequestBody String oldPassword, @RequestBody String newPassword) {
+        return ResponseEntity.ok(accountService.changePassword(idUser, oldPassword, newPassword));
+    }
+
     @GetMapping("/subComic/{id}/{idComic}")
     public ResponseEntity<ResponseObject> searchComics(@PathVariable String id, @PathVariable String idComic) {
         return ResponseEntity.ok(accountService.subComic(id, idComic));

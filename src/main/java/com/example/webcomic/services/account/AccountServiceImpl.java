@@ -40,7 +40,7 @@ public class AccountServiceImpl implements AccountService {
         if (accountDTO.getUsername().isEmpty()) {
             return new ResponseObject("Fail", "Username is null", "");
         }
-        else if (Objects.isNull(account)) {
+        else if (account.isPresent()) {
             return new ResponseObject("Fail", "Account already exists", "");
         }
 
@@ -68,6 +68,7 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public ResponseObject editAccount(AccountDTO accountDTO) {
+
         return new ResponseObject("Success", "Updated successfully", new AccountDTO(accountRepository.save(new Account(accountDTO))));
     }
 
@@ -94,5 +95,15 @@ public class AccountServiceImpl implements AccountService {
         });
 
         return new ResponseObject("Success", "Subcribe successfully", listAccountDTO);
+    }
+
+    @Override
+    public ResponseObject changePassword(String idUser, String oldPassword, String newPassword) {
+        Optional<Account> account = accountRepository.findAccountById(idUser);
+        if (PasswordEncryptionSingleton.getInstance().compare(oldPassword, account.get().getPassword())) {
+            return new ResponseObject("Fail", "Wrong password", "");
+        }
+        account.get().setPassword(PasswordEncryptionSingleton.getInstance().encrypt(newPassword));
+        return new ResponseObject("Success", "Change password successfully", new AccountDTO(accountRepository.save(account.get())));
     }
 }

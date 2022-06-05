@@ -16,6 +16,7 @@ import java.util.List;
 public class ComicDTO {
     private String id;
     private String comicName;
+    private String thumbnail;
     private List<String> author;
     private String genres;
     private String status;
@@ -28,6 +29,7 @@ public class ComicDTO {
     public ComicDTO(Comic comic) {
         this.id = comic.getId();
         this.comicName = comic.getComicName();
+        this.thumbnail = comic.getThumbnail();
         comic.getAuthor().forEach(author -> {
             if (this.author == null) {
                 this.author = new ArrayList<>();

@@ -12,4 +12,5 @@ public interface AccountService {
     ResponseObject editAccount(AccountDTO accountDTO);
     ResponseObject subComic(String id, String idComic);
     ResponseObject getAllAccount();
+    ResponseObject changePassword(String idUser, String oldPassword, String newPassword);
 }

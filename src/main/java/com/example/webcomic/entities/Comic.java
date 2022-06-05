@@ -23,6 +23,7 @@ public class Comic {
     @Id
     private String id;
     private String comicName;
+    private String thumbnail;
     private List<String> author;
     private String genres;
     private String status;
@@ -35,6 +36,7 @@ public class Comic {
     public Comic(ComicDTO comic) {
         this.id = comic.getId();
         this.comicName = comic.getComicName();
+        this.thumbnail = comic.getThumbnail();
         comic.getAuthor().forEach(author -> {
             if (this.author == null) {
                 this.author = new ArrayList<>();
