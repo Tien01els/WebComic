@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @RestController
 @RequestMapping(path = "/app/1.0/account")
 public class AccountController {
@@ -46,8 +48,8 @@ public class AccountController {
     }
 
     @PutMapping("/changePassword/{idUser}")
-    public ResponseEntity<ResponseObject> changePassword(@PathVariable String idUser, @RequestBody String oldPassword, @RequestBody String newPassword) {
-        return ResponseEntity.ok(accountService.changePassword(idUser, oldPassword, newPassword));
+    public ResponseEntity<ResponseObject> changePassword(@PathVariable String idUser, @RequestBody Map<String, String> password) {
+        return ResponseEntity.ok(accountService.changePassword(idUser, password.get("oldPassword"), password.get("newPassword")));
     }
 
     @GetMapping("/subComic/{id}/{idComic}")
