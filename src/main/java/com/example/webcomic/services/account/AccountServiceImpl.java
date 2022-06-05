@@ -108,6 +108,8 @@ public class AccountServiceImpl implements AccountService {
     public ResponseObject changePassword(String idUser, String oldPassword, String newPassword) {
         Optional<Account> account = accountRepository.findAccountById(idUser);
         if (PasswordEncryptionSingleton.getInstance().compare(oldPassword, account.get().getPassword())) {
+            return new ResponseObject("Fail", "The old password does not match the current password", "");
+        } else if (PasswordEncryptionSingleton.getInstance().compare(newPassword, account.get().getPassword())) {
             return new ResponseObject("Fail", "The new password is the same as the old password", "");
         }
         account.get().setPassword(PasswordEncryptionSingleton.getInstance().encrypt(newPassword));
