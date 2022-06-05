@@ -70,8 +70,10 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public ResponseObject editAccount(String id, UserDTO userDTO) {
         Optional<Account> account = accountRepository.findAccountById(id);
-        if (account.get().getUser().getFullname().equals(userDTO.getName())) {
-            return new ResponseObject("Fail", "Changed information coincides with previous information", "");
+        if (account.get().getUser().getFullname() != null) {
+            if (account.get().getUser().getFullname().equals(userDTO.getName())) {
+                return new ResponseObject("Fail", "Changed information coincides with previous information", "");
+            }
         }
         account.get().setUser(new User(userDTO));
         return new ResponseObject("Success", "Updated successfully", new AccountDTO(accountRepository.save(account.get())));
