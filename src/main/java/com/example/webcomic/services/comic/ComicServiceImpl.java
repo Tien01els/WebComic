@@ -95,7 +95,7 @@ public class ComicServiceImpl implements ComicService {
         Optional<Comic> comic = comicRepository.findComicById(idComic);
         Mode comicMode = Mode.valueOf(mode);
         comic.get().setShareMode(comicMode);
-        return new ResponseObject("Success", "Browse comic successfully", new ComicDTO(comicRepository.save(comic.get())));
+        return new ResponseObject("Success", "Browse successfully", new ComicDTO(comicRepository.save(comic.get())));
     }
 
     @Override
@@ -103,7 +103,7 @@ public class ComicServiceImpl implements ComicService {
         Optional<Comic> comic = comicRepository.findComicById(idComic);
         Mode comicMode = Mode.PRIVATE;
         comic.get().setShareMode(comicMode);
-        return new ResponseObject("Success", "Hide comic successfully", new ComicDTO(comicRepository.save(comic.get())));
+        return new ResponseObject("Success", "Hide successfully", new ComicDTO(comicRepository.save(comic.get())));
     }
 
     @Override

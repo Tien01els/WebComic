@@ -57,4 +57,9 @@ public class AccountController {
         return ResponseEntity.ok(accountService.subComic(idAccount, idComic));
     }
 
+    @GetMapping("/getAccount/{id}")
+    public ResponseEntity<ResponseObject> getAccount(@PathVariable String idAccount) {
+        return ResponseEntity.ok(accountService.getAccount(idAccount));
+    }
+
 }

@@ -14,4 +14,5 @@ public interface AccountService {
     ResponseObject getAllAccount();
     ResponseObject changePassword(String idAccount, String oldPassword, String newPassword);
     ResponseObject editUser(String idAccount, UserDTO userDTO);
+    ResponseObject getAccount(String idAccount);
 }

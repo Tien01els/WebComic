@@ -80,6 +80,11 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
+    public ResponseObject getAccount(String idAccount) {
+        return new ResponseObject("Success", "Get account successfully", new AccountDTO(accountRepository.findAccountById(idAccount).get()));
+    }
+
+    @Override
     public ResponseObject subComic(String idAccount, String idComic) {
         Account account = accountRepository.findAccountById(idAccount)
                 .map(accountFound -> {
@@ -90,7 +95,7 @@ public class AccountServiceImpl implements AccountService {
                 }).orElseGet(() -> {
                     return null;
                 });
-        return new ResponseObject("Success", "Subcribe successfully", new AccountDTO(account));
+        return new ResponseObject("Success", "Subscribe successfully", new AccountDTO(account));
     }
 
     @Override
@@ -101,7 +106,7 @@ public class AccountServiceImpl implements AccountService {
             listAccountDTO.add(new AccountDTO(account));
         });
 
-        return new ResponseObject("Success", "Subcribe successfully", listAccountDTO);
+        return new ResponseObject("Success", "Get all account successfully", listAccountDTO);
     }
 
     @Override
