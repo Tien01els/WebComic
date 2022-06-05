@@ -1,6 +1,7 @@
 package com.example.webcomic.services.comic;
 
 import com.example.webcomic.dtos.ComicDTO;
+import com.example.webcomic.enums.Mode;
 import com.example.webcomic.response.ResponseObject;
 import com.example.webcomic.entities.Comic;
 import com.example.webcomic.repositories.ComicRepository;
@@ -29,13 +30,10 @@ public class ComicServiceImpl implements ComicService {
 
     @Override
     public ResponseObject editComic(ComicDTO comicDTO) {
-//        Comic comicEdited = comicRepository.findById(comicDTO.getId())
-//                                .map(comic -> {
-//                                    return comic;
-//                                }).orElseGet(() -> { return null; });
-//        if (comicEdited == null) {
-//            return new ResponseObject("Fail", "Comic not found", "");
-//        }
+        Optional<Comic> comicEdited = comicRepository.findById(comicDTO.getId());
+        if (comicEdited.get().equals(comicDTO)) {
+            return new ResponseObject("Fail", "The new information comic is the same as previous information comic", "");
+        }
         return new ResponseObject("Success", "Updated successfully", new ComicDTO(comicRepository.save(new Comic(comicDTO))));
     }
 
@@ -60,16 +58,8 @@ public class ComicServiceImpl implements ComicService {
 //            e.printStackTrace();
 //        }
 
-
-        return new ResponseObject("Fail", "Comic not found", "");
-//        Comic comic = comicRepository.findComicById(id)
-//                .map(comicFound -> {
-//                    return comicFound;
-//                }).orElseGet(() -> { return null; });
-//        if (comic == null) {
-//            return new ResponseObject("Fail", "Comic not found", "");
-//        }
-//        return new ResponseObject("Success", "Get comic successfully", new ComicDTO(comic));
+        Optional<Comic> comic = comicRepository.findComicById(id);
+        return new ResponseObject("Success", "Get comic successfully", new ComicDTO(comic.get()));
     }
     public static byte[] toByteArray(BufferedImage bi, String format)
             throws IOException {
@@ -93,10 +83,36 @@ public class ComicServiceImpl implements ComicService {
     @Override
     public ResponseObject getFavComic(List<String> listIdFavComic) {
         List<ComicDTO> comicDTOList = new ArrayList<>();
-        listIdFavComic.forEach(idComic -> {
-            Optional<Comic> comic = comicRepository.findComicById(idComic);
+        listIdFavComic.forEach(id -> {
+            Optional<Comic> comic = comicRepository.findComicById(id);
             comicDTOList.add(new ComicDTO(comic.get()));
         });
         return new ResponseObject("Success", "Found comics successfully", comicDTOList);
+    }
+
+    @Override
+    public ResponseObject browseComic(String idComic, String mode) {
+        Optional<Comic> comic = comicRepository.findComicById(idComic);
+        Mode comicMode = Mode.valueOf(mode);
+        comic.get().setShareMode(comicMode);
+        return new ResponseObject("Success", "Browse comic successfully", new ComicDTO(comicRepository.save(comic.get())));
+    }
+
+    @Override
+    public ResponseObject hideComic(String idComic) {
+        Optional<Comic> comic = comicRepository.findComicById(idComic);
+        Mode comicMode = Mode.PRIVATE;
+        comic.get().setShareMode(comicMode);
+        return new ResponseObject("Success", "Hide comic successfully", new ComicDTO(comicRepository.save(comic.get())));
+    }
+
+    @Override
+    public ResponseObject getAllComic() {
+        List<Comic> comicList = comicRepository.findAll();
+        List<ComicDTO> comicDTOList = new ArrayList<>();
+        comicList.forEach(comic -> {
+            comicDTOList.add(new ComicDTO(comic));
+        });
+        return new ResponseObject("Success", "Hide comic successfully", comicDTOList);
     }
 }

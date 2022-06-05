@@ -56,8 +56,8 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public ResponseObject banAccount(String id) {
-        Account accountBanned = accountRepository.findAccountById(id)
+    public ResponseObject banAccount(String idAccount) {
+        Account accountBanned = accountRepository.findAccountById(idAccount)
                 .map(account -> {
                     account.setIsActive(false);
                     return accountRepository.save(account);
@@ -68,8 +68,8 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public ResponseObject editAccount(String id, UserDTO userDTO) {
-        Optional<Account> account = accountRepository.findAccountById(id);
+    public ResponseObject editUser(String idAccount, UserDTO userDTO) {
+        Optional<Account> account = accountRepository.findAccountById(idAccount);
         if (account.get().getUser().getFullname() != null) {
             if (account.get().getUser().getFullname().equals(userDTO.getName())) {
                 return new ResponseObject("Fail", "The new information is the same as previous information", "");
@@ -80,8 +80,8 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public ResponseObject subComic(String id, String idComic) {
-        Account account = accountRepository.findAccountById(id)
+    public ResponseObject subComic(String idAccount, String idComic) {
+        Account account = accountRepository.findAccountById(idAccount)
                 .map(accountFound -> {
                     if (accountFound.getSubscribeComicList() != null)
                         accountFound.setSubscribeComicList(new ArrayList<>());
@@ -105,8 +105,8 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public ResponseObject changePassword(String idUser, String oldPassword, String newPassword) {
-        Optional<Account> account = accountRepository.findAccountById(idUser);
+    public ResponseObject changePassword(String idAccount, String oldPassword, String newPassword) {
+        Optional<Account> account = accountRepository.findAccountById(idAccount);
         if (!PasswordEncryptionSingleton.getInstance().compare(oldPassword, account.get().getPassword())) {
             return new ResponseObject("Fail", "The old password does not match the current password", "");
         } else if (PasswordEncryptionSingleton.getInstance().compare(newPassword, account.get().getPassword())) {

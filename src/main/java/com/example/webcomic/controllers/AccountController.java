@@ -42,19 +42,19 @@ public class AccountController {
         return ResponseEntity.ok(accountService.createAccount(accountDTO));
     }
 
-    @PutMapping("/editAccount/{idUser}")
-    public ResponseEntity<ResponseObject> editAccount(@PathVariable String idUser, @RequestBody UserDTO userDTO) {
-        return ResponseEntity.ok(accountService.editAccount(idUser, userDTO));
+    @PutMapping("/editAccount/{idAccount}")
+    public ResponseEntity<ResponseObject> editUser(@PathVariable String idAccount, @RequestBody UserDTO userDTO) {
+        return ResponseEntity.ok(accountService.editUser(idAccount, userDTO));
     }
 
-    @PutMapping("/changePassword/{idUser}")
-    public ResponseEntity<ResponseObject> changePassword(@PathVariable String idUser, @RequestBody Map<String, String> password) {
-        return ResponseEntity.ok(accountService.changePassword(idUser, password.get("oldPassword"), password.get("newPassword")));
+    @PutMapping("/changePassword/{idAccount}")
+    public ResponseEntity<ResponseObject> changePassword(@PathVariable String idAccount, @RequestBody Map<String, String> password) {
+        return ResponseEntity.ok(accountService.changePassword(idAccount, password.get("oldPassword"), password.get("newPassword")));
     }
 
-    @GetMapping("/subComic/{id}/{idComic}")
-    public ResponseEntity<ResponseObject> searchComics(@PathVariable String id, @PathVariable String idComic) {
-        return ResponseEntity.ok(accountService.subComic(id, idComic));
+    @GetMapping("/subComic/{id}/{idAccount}")
+    public ResponseEntity<ResponseObject> searchComics(@PathVariable String idAccount, @PathVariable String idComic) {
+        return ResponseEntity.ok(accountService.subComic(idAccount, idComic));
     }
 
 }

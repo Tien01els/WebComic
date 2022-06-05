@@ -13,4 +13,7 @@ public interface ComicService {
     ResponseObject getComicInfo(String id);
     ResponseObject searchComics(String name);
     ResponseObject getFavComic(List<String> listIdFavComic);
+    ResponseObject browseComic(String idComic, String mode);
+    ResponseObject hideComic(String idComic);
+    ResponseObject getAllComic();
 }
