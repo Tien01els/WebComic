@@ -52,12 +52,12 @@ public class AccountController {
         return ResponseEntity.ok(accountService.changePassword(idAccount, password.get("oldPassword"), password.get("newPassword")));
     }
 
-    @GetMapping("/subComic/{id}/{idAccount}")
+    @GetMapping("/subComic/{idAccount}/{idComic}")
     public ResponseEntity<ResponseObject> searchComics(@PathVariable String idAccount, @PathVariable String idComic) {
         return ResponseEntity.ok(accountService.subComic(idAccount, idComic));
     }
 
-    @GetMapping("/getAccount/{id}")
+    @GetMapping("/getAccount/{idAccount}")
     public ResponseEntity<ResponseObject> getAccount(@PathVariable String idAccount) {
         return ResponseEntity.ok(accountService.getAccount(idAccount));
     }
