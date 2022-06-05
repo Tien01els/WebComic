@@ -3,6 +3,7 @@ package com.example.webcomic.services.account;
 import com.example.webcomic.dtos.AccountDTO;
 import com.example.webcomic.dtos.UserDTO;
 import com.example.webcomic.entities.Account;
+import com.example.webcomic.entities.embedded.User;
 import com.example.webcomic.response.ResponseObject;
 import com.example.webcomic.repositories.AccountRepository;
 import com.example.webcomic.utils.PasswordEncryptionSingleton;
@@ -67,9 +68,13 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public ResponseObject editAccount(AccountDTO accountDTO) {
-
-        return new ResponseObject("Success", "Updated successfully", new AccountDTO(accountRepository.save(new Account(accountDTO))));
+    public ResponseObject editAccount(String id, UserDTO userDTO) {
+        Optional<Account> account = accountRepository.findAccountById(id);
+        if (account.get().getUser().equals(userDTO)) {
+            return new ResponseObject("Fail", "Changed information coincides with previous information", "");
+        }
+        account.get().setUser(new User(userDTO));
+        return new ResponseObject("Success", "Updated successfully", new AccountDTO(accountRepository.save(account.get())));
     }
 
     @Override

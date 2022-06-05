@@ -1,6 +1,7 @@
 package com.example.webcomic.controllers;
 
 import com.example.webcomic.dtos.AccountDTO;
+import com.example.webcomic.dtos.UserDTO;
 import com.example.webcomic.response.ResponseObject;
 import com.example.webcomic.services.account.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,9 +40,9 @@ public class AccountController {
         return ResponseEntity.ok(accountService.createAccount(accountDTO));
     }
 
-    @PutMapping("/editAccount")
-    public ResponseEntity<ResponseObject> editAccount(@RequestBody AccountDTO accountDTO) {
-        return ResponseEntity.ok(accountService.editAccount(accountDTO));
+    @PutMapping("/editAccount/{idUser}")
+    public ResponseEntity<ResponseObject> editAccount(@PathVariable String idUser, @RequestBody UserDTO userDTO) {
+        return ResponseEntity.ok(accountService.editAccount(idUser, userDTO));
     }
 
     @PutMapping("/changePassword/{idUser}")
