@@ -2,6 +2,7 @@ package com.example.webcomic.services.comic;
 
 import com.example.webcomic.dtos.ComicDTO;
 import com.example.webcomic.enums.Mode;
+import com.example.webcomic.repositories.AccountRepository;
 import com.example.webcomic.response.ResponseObject;
 import com.example.webcomic.entities.Comic;
 import com.example.webcomic.repositories.ComicRepository;
@@ -21,6 +22,9 @@ public class ComicServiceImpl implements ComicService {
 
     @Autowired
     ComicRepository comicRepository;
+
+    @Autowired
+    AccountRepository accountRepository;
 
     @Override
     public ResponseObject addComic(ComicDTO comicDTO) {
@@ -59,6 +63,11 @@ public class ComicServiceImpl implements ComicService {
 //        }
 
         Optional<Comic> comic = comicRepository.findComicById(id);
+        List<String> authorList = new ArrayList<>();
+        comic.get().getAuthor().forEach(idAuthor -> {
+            authorList.add(accountRepository.findAccountById(idAuthor).get().getUser().getFullname());
+        });
+        comic.get().setAuthor(authorList);
         return new ResponseObject("Success", "Get comic successfully", new ComicDTO(comic.get()));
     }
     public static byte[] toByteArray(BufferedImage bi, String format)
