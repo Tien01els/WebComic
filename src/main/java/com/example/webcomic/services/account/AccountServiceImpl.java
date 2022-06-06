@@ -25,12 +25,12 @@ public class AccountServiceImpl implements AccountService {
         Optional<Account> account = accountRepository.findAccountByUsername(accountDTO.getUsername());
         if (Objects.isNull(account)) {
             return new ResponseObject("Fail", "Account invalid", "");
+        }else if (!account.get().getIsActive()) {
+            return new ResponseObject("Fail", "Account is banned", "");
         }
         else if (!PasswordEncryptionSingleton.getInstance().compare(accountDTO.getPassword(), account.get().getPassword()))
         {
             return new ResponseObject("Fail", "Password invalid", "");
-        } else if (!account.get().getIsActive()) {
-            return new ResponseObject("Fail", "Account is banned", "");
         }
         return new ResponseObject("Success", "Logged in successfully", new AccountDTO(account.get()));
     }
