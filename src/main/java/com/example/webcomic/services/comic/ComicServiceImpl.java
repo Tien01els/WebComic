@@ -83,7 +83,13 @@ public class ComicServiceImpl implements ComicService {
     public ResponseObject searchComics(String keyword) {
         List<Comic> comicList = comicRepository.findByName(keyword);
         List<ComicDTO> comicDTOList = new ArrayList<>();
+
         comicList.forEach(comic -> {
+            List<String> authorList = new ArrayList<>();
+            comic.getAuthor().forEach(idAuthor -> {
+                authorList.add(accountRepository.findAccountById(idAuthor).get().getUser().getFullname());
+            });
+            comic.setAuthor(authorList);
             comicDTOList.add(new ComicDTO(comic));
         });
         return new ResponseObject("Success", "Found comics successfully", comicDTOList);
@@ -94,6 +100,11 @@ public class ComicServiceImpl implements ComicService {
         List<ComicDTO> comicDTOList = new ArrayList<>();
         listIdFavComic.forEach(id -> {
             Optional<Comic> comic = comicRepository.findComicById(id);
+            List<String> authorList = new ArrayList<>();
+            comic.get().getAuthor().forEach(idAuthor -> {
+                authorList.add(accountRepository.findAccountById(idAuthor).get().getUser().getFullname());
+            });
+            comic.get().setAuthor(authorList);
             comicDTOList.add(new ComicDTO(comic.get()));
         });
         return new ResponseObject("Success", "Found comics successfully", comicDTOList);
@@ -120,6 +131,11 @@ public class ComicServiceImpl implements ComicService {
         List<Comic> comicList = comicRepository.findAll();
         List<ComicDTO> comicDTOList = new ArrayList<>();
         comicList.forEach(comic -> {
+            List<String> authorList = new ArrayList<>();
+            comic.getAuthor().forEach(idAuthor -> {
+                authorList.add(accountRepository.findAccountById(idAuthor).get().getUser().getFullname());
+            });
+            comic.setAuthor(authorList);
             comicDTOList.add(new ComicDTO(comic));
         });
         return new ResponseObject("Success", "Hide comic successfully", comicDTOList);
